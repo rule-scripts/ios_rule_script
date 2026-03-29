@@ -1,0 +1,21 @@
+name: Sync Upstream blackmatrix7
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 每天 UTC 02:00（北京时间 10:00）
+  workflow_dispatch:        # 支持手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync from upstream blackmatrix7/ios_rule_script
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          upstream_sync_repo: blackmatrix7/ios_rule_script
+          upstream_sync_branch: master
+          target_sync_branch: main
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          test_mode: false
